@@ -1,50 +1,62 @@
+import pieces.King;
+
 public class Board {
 
     // FUTURE REFACT :D ESTE CODIGO ES UNA MIERDA
     static String[][] generateBoard() {
-        String[][] board = new String[8][8]; // 8x8
-        char aux = 'A';
-        int cont = 0;
+        String[][] board = new String[9][9];
+        char character = 'A';
+
         // Creating the chess board
         for (var rows = 0; rows < board.length; rows++) {
             for (var cols = 0; cols < board.length; cols++) {
+
                 if (rows == 0) {
-                    if (cont == 0) {
-
-                        for (int i = 1; i < 9; i++) {
-                            System.out.print(" " + i + " ");
-                        }
-                        System.out.println();
-                        cont++;
+                    if (character == 'I') {
+                        board[rows][cols] = "";
+                        continue;
                     }
-
-                    System.out.print(" " + aux + " ");
-                    aux++;
-                    if (aux == 'I') {
-                        System.out.println();
-                    }
+                    board[rows][cols] = "  " + Character.toString(character);
+                    character++;
                 }
 
-                if (rows % 2 == 0 && cols == 0) {
+                if (cols == 0 && rows != 0) {
+                    board[rows][cols] = Integer.toString(rows);
 
-                    board[rows][cols] = " □ ";
-                    continue;
-                } else if (rows % 2 != 0 && cols == 0) {
-                    board[rows][cols] = " ■ ";
-
-                    continue;
                 }
 
-                if (board[rows][cols - 1].equals(" □ ")) {
-                    board[rows][cols] = " ■ ";
-                } else {
-                    board[rows][cols] = " □ ";
+                if (rows != 0 && cols != 0) {
+                    if (rows % 2 == 0 && cols == 1) {
+
+                        board[rows][cols] = " □ ";
+                        continue;
+                    } else if (rows % 2 != 0 && cols == 1) {
+                        board[rows][cols] = " ■ ";
+
+                        continue;
+                    }
+
+                    if (board[rows][cols - 1].equals(" □ ")) {
+                        board[rows][cols] = " ■ ";
+                    } else {
+                        board[rows][cols] = " □ ";
+                    }
                 }
 
             }
 
         }
         return board;
+    }
+
+    public static void main(String[] args) {
+        var board = generateBoard();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
 
     }
 
