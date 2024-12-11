@@ -1,5 +1,6 @@
 package pieces;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class King extends Piece {
@@ -26,10 +27,16 @@ public class King extends Piece {
                     || (moveParts[0].charAt(0) >= 'A' && moveParts[0].charAt(0) <= 'H')) {
                 System.out.println("The move is not valid");
 
-                
+            } else if (letterRow != cols) {
+                if (!isValidMoveHorizontal(board, rows, cols, newRow, letterRow, this)) {
+
+                    System.out.println("The move is not valid");
+                } else {
+                    isValid = true;
+                }
             }
-         
-             else {
+
+            else {
 
                 isValid = true;
             }
@@ -66,4 +73,45 @@ public class King extends Piece {
         }
         return position;
     }
+
+    static boolean isValidMoveHorizontal(String[][] board, int row, int col, int newRow, int newCol, King king) {
+
+        if (newRow == 0) {
+            return false;
+        }
+        int rowDiff = Math.abs(row - newRow);
+        int colDiff = Math.abs(col - newCol);
+        if (king.getColor().equals("white")) {
+
+            if (isPositionValid(board, newRow, newCol, rowDiff, colDiff)) {
+                return false;
+            } else if (containsWhitePiece(board, rowDiff, colDiff)) {
+                return false;
+            }
+        } else {
+            if (isPositionValid(board, newRow, newCol, rowDiff, colDiff)) {
+                return false;
+            } else if (containsBlackPiece(board, rowDiff, colDiff)) {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
+    private static boolean isPositionValid(String[][] board, int newRow, int newCol, int rowDiff, int colDiff) {
+        return (rowDiff & colDiff) != 1 || (newRow < 0 && newRow > board.length)
+                || (newCol < 0 && newCol > board.length);
+    }
+
+    static boolean containsWhitePiece(String[][] board, int row, int col) {
+        List<String> whitePieces = List.of("♕", "♖", "♗", "♘", "♙");
+        return whitePieces.contains(board[row][col]);
+    }
+
+    static boolean containsBlackPiece(String[][] board, int row, int col) {
+        List<String> blackPieces = List.of("♛", "♜", "♝", "♞", "♟");
+        return blackPieces.contains(board[row][col]);
+    }
+
 }
