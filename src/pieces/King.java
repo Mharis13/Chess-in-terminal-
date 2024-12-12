@@ -23,12 +23,20 @@ public class King extends Piece {
             newRow = Integer.parseInt(moveParts[1]); // aux
             letterRow = getPosition(board, newCol) + 1;
 
-            if ((newRow < 1 && newRow > 8)
-                    || (moveParts[0].charAt(0) >= 'A' && moveParts[0].charAt(0) <= 'H')) {
+            if ((newRow < 1 || newRow > 8)
+                    || (newCol.charAt(0) < 'A' || newCol.charAt(0) > 'H')) {
                 System.out.println("The move is not valid");
 
             } else if (letterRow != cols) {
-                if (!isValidMoveHorizontal(board, rows, cols, newRow, letterRow, this)) {
+                if (newRow == rows) {
+                    if (!isValidMoveHorizontal(board, rows, cols, newRow, letterRow, this)) {
+                        System.out.println("The move is not valid");
+                    } else {
+                        isValid = true;
+                    }
+
+                }
+                if (!isValidMoveDiagonal(board, rows, cols, newRow, letterRow, this)) {
 
                     System.out.println("The move is not valid");
                 } else {
@@ -37,6 +45,14 @@ public class King extends Piece {
             }
 
             else {
+                if (!isValidMoveVertical(board, rows, cols, newRow, letterRow, this)) {
+                    System.out.println("The move is not valid");
+                    continue;
+
+                } else {
+
+                    isValid = true;
+                }
 
                 isValid = true;
             }
@@ -63,7 +79,7 @@ public class King extends Piece {
 
     }
 
-    static int getPosition(String[][] board, String s) {
+    private static int getPosition(String[][] board, String s) {
         int position = 0;
         char c = s.charAt(0);
         for (int i = 0; i < board.length; i++) {
@@ -74,7 +90,8 @@ public class King extends Piece {
         return position;
     }
 
-    static boolean isValidMoveHorizontal(String[][] board, int row, int col, int newRow, int newCol, King king) {
+    private static boolean isValidMoveDiagonal(String[][] board, int row, int col, int newRow, int newCol,
+            King king) {
 
         if (newRow == 0) {
             return false;
@@ -85,13 +102,13 @@ public class King extends Piece {
 
             if (isPositionValid(board, newRow, newCol, rowDiff, colDiff)) {
                 return false;
-            } else if (containsWhitePiece(board, rowDiff, colDiff)) {
+            } else if (containsWhitePiece(board, newRow, newCol)) {
                 return false;
             }
         } else {
             if (isPositionValid(board, newRow, newCol, rowDiff, colDiff)) {
                 return false;
-            } else if (containsBlackPiece(board, rowDiff, colDiff)) {
+            } else if (containsBlackPiece(board, newRow, newCol)) {
                 return false;
             }
 
@@ -99,17 +116,60 @@ public class King extends Piece {
         return true;
     }
 
-    private static boolean isPositionValid(String[][] board, int newRow, int newCol, int rowDiff, int colDiff) {
-        return (rowDiff & colDiff) != 1 || (newRow < 0 && newRow > board.length)
-                || (newCol < 0 && newCol > board.length);
+    private static boolean isValidMoveVertical(String[][] board, int row, int col, int newRow, int newCol, King king) {
+        int rowDiff = Math.abs(row - newRow);
+        if (king.getColor().equals("white")) {
+            if ((newRow < 0 || newRow > board.length - 1)
+                    || (rowDiff != 1)) {
+                return false;
+            } else if (containsWhitePiece(board, newRow, newCol)) {
+                return false;
+            }
+        } else {
+            if ((newRow < 0 || newRow > board.length - 1)
+                    || (rowDiff != 1)) {
+                return false;
+            } else if (containsBlackPiece(board, newRow, newCol)) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    static boolean containsWhitePiece(String[][] board, int row, int col) {
+    private static boolean isValidMoveHorizontal(String[][] board, int row, int col, int newRow, int newCol,
+            King king) {
+        int colDiff = Math.abs(col - newCol);
+
+        if (king.getColor().equals("white")) {
+
+            if ((newCol < 0 || newCol > board.length - 1)
+                    || (colDiff != 1)) {
+                return false;
+            } else if (containsWhitePiece(board, newRow, newCol)) {
+                return false;
+            }
+        } else {
+            if ((newCol < 0 || newCol > board.length - 1)
+                    || (colDiff != 1)) {
+                return false;
+            } else if (containsBlackPiece(board, newRow, newCol)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isPositionValid(String[][] board, int newRow, int newCol, int rowDiff, int colDiff) {
+        return (rowDiff & colDiff) != 1 || (newRow < 0 || newRow > board.length - 1)
+                || (newCol < 0 || newCol > board.length - 1);
+    }
+
+    private static boolean containsWhitePiece(String[][] board, int row, int col) {
         List<String> whitePieces = List.of("♕", "♖", "♗", "♘", "♙");
         return whitePieces.contains(board[row][col]);
     }
 
-    static boolean containsBlackPiece(String[][] board, int row, int col) {
+    private static boolean containsBlackPiece(String[][] board, int row, int col) {
         List<String> blackPieces = List.of("♛", "♜", "♝", "♞", "♟");
         return blackPieces.contains(board[row][col]);
     }
