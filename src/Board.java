@@ -1,4 +1,5 @@
 import pieces.King;
+import pieces.Turret;
 
 public class Board {
 
@@ -51,7 +52,7 @@ public class Board {
 
     public static void main(String[] args) {
         var board = generateBoard();
-        King king = new King("K", "♔", "white");
+        Turret king = new Turret("TK", "♜", "white");
         board[5][5] = king.getIcon();
 
         for (int i = 0; i < board.length; i++) {
