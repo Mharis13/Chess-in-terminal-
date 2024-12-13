@@ -120,12 +120,12 @@ public class Turret extends Piece {
     }
 
     private static boolean containsWhitePiece(String[][] board, int row, int col) {
-        List<String> whitePieces = List.of("♕", "♖", "♗", "♘", "♙");
+        List<String> whitePieces = List.of("♕", "♖", "♗", "♘", "♙", "♔");
         return whitePieces.contains(board[row][col]);
     }
 
     private static boolean containsBlackPiece(String[][] board, int row, int col) {
-        List<String> blackPieces = List.of("♛", "♜", "♝", "♞", "♟");
+        List<String> blackPieces = List.of("♛", "♜", "♝", "♞", "♟", "♚");
         return blackPieces.contains(board[row][col]);
     }
 }

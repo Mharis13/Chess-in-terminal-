@@ -1,6 +1,9 @@
+import java.util.Queue;
+
 import pieces.Bishop;
 import pieces.King;
 import pieces.Pawn;
+import pieces.Queen;
 import pieces.Turret;
 
 public class Board {
@@ -54,7 +57,7 @@ public class Board {
 
     public static void main(String[] args) {
         var board = generateBoard();
-        Bishop king = new Bishop("P", "♗", "white");
+        Queen king = new Queen("P", "♕", "white");
         board[6][5] = king.getIcon();
 
         for (int i = 0; i < board.length; i++) {

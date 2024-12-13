@@ -22,39 +22,36 @@ public class Bishop extends Piece {
             String move = sc.nextLine();
             String[] moveParts = move.split("");
             newCol = moveParts[0].toUpperCase();
-            newRow = Integer.parseInt(moveParts[1]); // aux
+            newRow = Integer.parseInt(moveParts[1]);
             letterColumn = getPosition(board, newCol) + 1;
 
             if ((newRow < 1 || newRow > 8)
                     || (newCol.charAt(0) < 'A' || newCol.charAt(0) > 'H')) {
                 System.out.println("The move is not valid");
                 continue;
+            }
 
-            }
-            if (letterColumn != cols && newRow != rows) {
-                if (!isValidMoveDiagonal(board, rows, cols, letterColumn, cols, this)) {
-                    System.out.println("The move is not valid");
-                } else {
+            if (Math.abs(newRow - rows) == Math.abs(letterColumn - cols)) {
+                if (isPathClear(board, rows, cols, newRow, letterColumn)) {
                     isValid = true;
+                } else {
+                    System.out.println("The path is not clear");
                 }
+            } else {
+                System.out.println("The move is not valid");
             }
-            System.out.println("The move is not valid");
         }
 
         if (getColor().equals("white")) {
             board[newRow][letterColumn] = " ♗ ";
-            if (board[rows][cols - 1].equals(" ■ ")) {
-                board[rows][cols] = " □ ";
-            } else {
-                board[rows][cols] = " ■ ";
-            }
         } else {
-            board[newRow][letterColumn] = " ♗ ";
-            if (board[rows][cols - 1].equals(" ■ ")) {
-                board[rows][cols] = " □ ";
-            } else {
-                board[rows][cols] = " ■ ";
-            }
+            board[newRow][letterColumn] = " ♝ ";
+        }
+
+        if (board[rows][cols - 1].equals(" ■ ")) {
+            board[rows][cols] = " □ ";
+        } else {
+            board[rows][cols] = " ■ ";
         }
 
         sc.close();
@@ -71,13 +68,31 @@ public class Bishop extends Piece {
         return position;
     }
 
+    private static boolean isPathClear(String[][] board, int startRow, int startCol, int endRow, int endCol) {
+        int rowStep = (endRow - startRow) > 0 ? 1 : -1;
+        int colStep = (endCol - startCol) > 0 ? 1 : -1;
+
+        int currentRow = startRow + rowStep;
+        int currentCol = startCol + colStep;
+
+        while (currentRow != endRow && currentCol != endCol) {
+            if (!board[currentRow][currentCol].equals(" □ ") && !board[currentRow][currentCol].equals(" ■ ")) {
+                return false;
+            }
+            currentRow += rowStep;
+            currentCol += colStep;
+        }
+
+        return true;
+    }
+
     private static boolean containsWhitePiece(String[][] board, int row, int col) {
-        List<String> whitePieces = List.of("♕", "♖", "♗", "♘", "♙");
+        List<String> whitePieces = List.of("♕", "♖", "♗", "♘", "♙", "♔");
         return whitePieces.contains(board[row][col]);
     }
 
     private static boolean containsBlackPiece(String[][] board, int row, int col) {
-        List<String> blackPieces = List.of("♛", "♜", "♝", "♞", "♟");
+        List<String> blackPieces = List.of("♛", "♜", "♝", "♞", "♟", "♚");
         return blackPieces.contains(board[row][col]);
     }
 
@@ -110,5 +125,4 @@ public class Bishop extends Piece {
         return (newRow < 0 || newRow > board.length - 1)
                 || (newCol < 0 || newCol > board.length - 1);
     }
-
 }
