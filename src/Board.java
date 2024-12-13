@@ -53,8 +53,8 @@ public class Board {
 
     public static void main(String[] args) {
         var board = generateBoard();
-        Pawn king = new Pawn("P", "♙", "white");
-        board[5][5] = king.getIcon();
+        Pawn king = new Pawn("P", "♙", "black");
+        board[6][5] = king.getIcon();
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
@@ -62,7 +62,7 @@ public class Board {
             }
             System.out.println();
         }
-        king.movement(board, 5, 5);
+        king.movement(board, 6, 5);
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 System.out.print(board[i][j] + " ");

@@ -38,15 +38,29 @@ public class Pawn extends Piece {
 
         }
 
+        if (newRow == 8 && this.getColor().equals("white")) {
+
+        }
+
         if (getColor().equals("white")) {
-            board[newRow][letterRow] = " ♙ ";
+            String piece = " ♙ ";
+            if (newRow == 1) {
+                piece = convertPawn(piece, this);
+
+            }
+            board[newRow][letterRow] = piece;
             if (board[rows][cols - 1].equals(" ■ ")) {
                 board[rows][cols] = " □ ";
             } else {
                 board[rows][cols] = " ■ ";
             }
         } else {
-            board[newRow][letterRow] = " ♟ ";
+            String piece = " ♟ ";
+            if (newRow == 8) {
+                piece = convertPawn(piece, this);
+
+            }
+            board[newRow][letterRow] = piece;
             if (board[rows][cols - 1].equals(" ■ ")) {
                 board[rows][cols] = " □ ";
             } else {
@@ -72,17 +86,16 @@ public class Pawn extends Piece {
         int rowDiff = 0;
         boolean isPositionZero = false;
 
-        if (row < newRow) {
-            return false;
-        } else {
-            rowDiff = Math.abs(row - newRow);
-        }
+        rowDiff = Math.abs(row - newRow);
 
         if (row == 7) {
             isPositionZero = true;
         }
 
         if (king.getColor().equals("white")) {
+            if (row < newRow) {
+                return false;
+            }
             if (((newRow < 0 || newRow > board.length - 1)
                     || (rowDiff != 1)) && !isPositionZero) {
                 return false;
@@ -97,6 +110,10 @@ public class Pawn extends Piece {
                 }
             }
         } else {
+            if (row > newRow) {
+                return false;
+            }
+
             if ((newRow < 0 || newRow > board.length - 1)
                     || (rowDiff != 1)) {
                 return false;
@@ -110,6 +127,63 @@ public class Pawn extends Piece {
             }
         }
         return true;
+    }
+
+    private static String convertPawn(String piece, Pawn pawn) {
+        Scanner sc = new Scanner(System.in);
+        if (pawn.getColor().equals("white")) {
+
+            do {
+                System.out.println("Tell what piece you want:");
+                piece = sc.nextLine();
+                switch (piece) {
+                    case "horse":
+                        piece = "♘";
+
+                        break;
+                    case "queen":
+                        piece = "♕";
+                        break;
+                    case "bishop":
+                        piece = "♗";
+                        break;
+                    case "tower":
+                        piece = "♖";
+                        break;
+
+                    default:
+                        piece = "";
+                        break;
+                }
+            } while (piece == "");
+
+        } else {
+            do {
+                System.out.println("Tell what piece you want:");
+                piece = sc.nextLine();
+                switch (piece) {
+                    case "horse":
+                        piece = "♞";
+
+                        break;
+                    case "queen":
+                        piece = "♛";
+                        break;
+                    case "bishop":
+                        piece = "♝";
+                        break;
+                    case "tower":
+                        piece = "♜";
+
+                    default:
+                        piece = "";
+                        break;
+                }
+            } while (piece == "");
+
+        }
+        sc.close();
+        return piece;
     }
 
     private static boolean containsWhitePiece(String[][] board, int row, int col) {
