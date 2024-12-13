@@ -15,29 +15,29 @@ public class Turret extends Piece {
         Scanner sc = new Scanner(System.in);
         String newCol = "";
         int newRow = 0;
-        int letterRow = 0;
+        int letterColumn = 0;
         while (!isValid) {
             System.out.print("Move: ");
             String move = sc.nextLine();
             String[] moveParts = move.split("");
             newCol = moveParts[0].toUpperCase();
             newRow = Integer.parseInt(moveParts[1]); // aux
-            letterRow = getPosition(board, newCol) + 1;
+            letterColumn = getPosition(board, newCol) + 1;
 
             if ((newRow < 1 || newRow > 8)
                     || (newCol.charAt(0) < 'A' || newCol.charAt(0) > 'H')) {
                 System.out.println("The move is not valid");
 
             } else if (newRow == rows) {
-                if (!isValidMoveHorizontal(board, letterRow, cols, newRow, cols, this)) {
+                if (!isValidMoveHorizontal(board, letterColumn, cols, newRow, cols, this)) {
                     System.out.println("The move is not valid");
                 } else {
                     isValid = true;
                 }
             } else {
-                if (newRow != rows && letterRow == cols) {
+                if (newRow != rows && letterColumn == cols) {
 
-                    if (!isValidMoveVertical(board, letterRow, cols, newRow, cols, this)) {
+                    if (!isValidMoveVertical(board, letterColumn, cols, newRow, cols, this)) {
                         System.out.println("The move is not valid");
                     } else {
                         isValid = true;
@@ -50,14 +50,14 @@ public class Turret extends Piece {
 
         }
         if (getColor().equals("white")) {
-            board[newRow][letterRow] = " ♖ ";
+            board[newRow][letterColumn] = " ♖ ";
             if (board[rows][cols - 1].equals(" ■ ")) {
                 board[rows][cols] = " □ ";
             } else {
                 board[rows][cols] = " ■ ";
             }
         } else {
-            board[newRow][letterRow] = " ♜ ";
+            board[newRow][letterColumn] = " ♜ ";
             if (board[rows][cols - 1].equals(" ■ ")) {
                 board[rows][cols] = " □ ";
             } else {

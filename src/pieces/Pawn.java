@@ -15,20 +15,20 @@ public class Pawn extends Piece {
         Scanner sc = new Scanner(System.in);
         String newCol = "";
         int newRow = 0;
-        int letterRow = 0;
+        int letterColumn = 0;
         while (!isValid) {
             System.out.print("Move: ");
             String move = sc.nextLine();
             String[] moveParts = move.split("");
             newCol = moveParts[0].toUpperCase();
             newRow = Integer.parseInt(moveParts[1]); // aux
-            letterRow = getPosition(board, newCol) + 1;
+            letterColumn = getPosition(board, newCol) + 1;
             if ((newRow < 1 || newRow > 8)
                     || (newCol.charAt(0) < 'A' || newCol.charAt(0) > 'H')) {
                 System.out.println("The move is not valid");
 
             }
-            if (!isValidMoveVertical(board, rows, cols, newRow, letterRow, this)) {
+            if (!isValidMoveVertical(board, rows, cols, newRow, letterColumn, this)) {
                 System.out.println("The move is not valid");
 
             } else {
@@ -48,7 +48,7 @@ public class Pawn extends Piece {
                 piece = convertPawn(piece, this);
 
             }
-            board[newRow][letterRow] = piece;
+            board[newRow][letterColumn] = piece;
             if (board[rows][cols - 1].equals(" ■ ")) {
                 board[rows][cols] = " □ ";
             } else {
@@ -60,7 +60,7 @@ public class Pawn extends Piece {
                 piece = convertPawn(piece, this);
 
             }
-            board[newRow][letterRow] = piece;
+            board[newRow][letterColumn] = piece;
             if (board[rows][cols - 1].equals(" ■ ")) {
                 board[rows][cols] = " □ ";
             } else {
