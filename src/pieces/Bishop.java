@@ -1,6 +1,5 @@
 package pieces;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class Bishop extends Piece {
@@ -86,43 +85,4 @@ public class Bishop extends Piece {
         return true;
     }
 
-    private static boolean containsWhitePiece(String[][] board, int row, int col) {
-        List<String> whitePieces = List.of("♕", "♖", "♗", "♘", "♙", "♔");
-        return whitePieces.contains(board[row][col]);
-    }
-
-    private static boolean containsBlackPiece(String[][] board, int row, int col) {
-        List<String> blackPieces = List.of("♛", "♜", "♝", "♞", "♟", "♚");
-        return blackPieces.contains(board[row][col]);
-    }
-
-    private static boolean isValidMoveDiagonal(String[][] board, int row, int col, int newRow, int newCol,
-            Bishop bishop) {
-
-        if (newRow == 0) {
-            return false;
-        }
-
-        if (bishop.getColor().equals("white")) {
-
-            if (isPositionValid(board, newRow, newCol)) {
-                return false;
-            } else if (containsWhitePiece(board, newRow, newCol)) {
-                return false;
-            }
-        } else {
-            if (isPositionValid(board, newRow, newCol)) {
-                return false;
-            } else if (containsBlackPiece(board, newRow, newCol)) {
-                return false;
-            }
-
-        }
-        return true;
-    }
-
-    private static boolean isPositionValid(String[][] board, int newRow, int newCol) {
-        return (newRow < 0 || newRow > board.length - 1)
-                || (newCol < 0 || newCol > board.length - 1);
-    }
 }
