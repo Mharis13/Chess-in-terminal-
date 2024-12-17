@@ -164,11 +164,6 @@ public class Queen extends Piece {
         return true;
     }
 
-    private static boolean isPositionValid(String[][] board, int newRow, int newCol) {
-        return (newRow < 0 || newRow > board.length - 1)
-                || (newCol < 0 || newCol > board.length - 1);
-    }
-
     private static boolean containsWhitePiece(String[][] board, int row, int col) {
         List<String> whitePieces = List.of("♕", "♖", "♗", "♘", "♙");
         return whitePieces.contains(board[row][col]);
