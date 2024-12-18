@@ -1,9 +1,5 @@
 
-import pieces.Bishop;
-import pieces.King;
-import pieces.Pawn;
-import pieces.Queen;
-import pieces.Turret;
+import pieces.*;
 
 public class Board {
 
@@ -56,7 +52,7 @@ public class Board {
 
     public static void main(String[] args) {
         var board = generateBoard();
-        Queen  king = new Queen("P", "♕", "white");
+        Horse king = new Horse("P", "♕", "white");
         board[6][5] = king.getIcon();
 
         for (int i = 0; i < board.length; i++) {
