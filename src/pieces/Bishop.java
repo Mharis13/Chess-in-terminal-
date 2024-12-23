@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Bishop extends Piece {
 
-    public Bishop(String name, String icon, String color) {
-        super(name, icon, color);
+    public Bishop(String name, String icon, String color, int row, int col) {
+        super(name, icon, color, row, col);
     }
 
     @Override

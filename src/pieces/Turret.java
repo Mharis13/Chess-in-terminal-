@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Turret extends Piece {
-    public Turret(String name, String icon,
-            String color) {
-        super(name, icon, color);
+    public Turret(String name, String icon, String color, int row, int col) {
+        super(name, icon, color, row, col);
     }
 
     @Override

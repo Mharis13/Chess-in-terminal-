@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Horse extends Piece {
 
-    public Horse(String name, String icon, String color) {
-        super(name, icon, color);
+    public Horse(String name, String icon, String color, int row, int col) {
+        super(name, icon, color, row, col);
     }
 
     @Override

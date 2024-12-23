@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class King extends Piece {
 
-    public King(String name, String icon, String color) {
-        super(name, icon, color);
+    public King(String name, String icon, String color, int row, int col) {
+        super(name, icon, color, row, col);
     }
 
     public void movement(String[][] board, int rows, int cols) {
